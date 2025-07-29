@@ -20,7 +20,7 @@ I learned:
 4. **Most interesting:** Some response caching happens behind the scenes, so if you ask the same thing quickly twice in a row, the second response is much faster than the first. But we found no straightforward way to configure or interact in any meaningful way with that cache. Seems like an area for further investigation.
 
 ## Files
-- interactive_rag_benchmark.py: **Use this one** Incorporates improvements from the other versions
-- rag_benchmark.py: basic version with single, fixed prompt
-- recursive_rag_benchmark.py: basic version with added text cleaning and recursive chunking (rather than more naive sentence or token chunking)—interesting experiment, no noticeable performance differences
-- advanced_rag_benchmark.py: basic version plus choice between flat and IVF indexes
+- [**Use this one**] *interactive_rag_benchmark.py*: Incorporates improvements from the other versions
+- *rag_benchmark.py*: basic version with single, fixed prompt
+- *recursive_rag_benchmark.py*: basic version with added text cleaning and recursive chunking (rather than more naive sentence or token chunking)—interesting experiment, no noticeable performance differences
+- *advanced_rag_benchmark.py*: basic version plus choice between flat and IVF indexes

@@ -1,3 +1,5 @@
+# Allows you to choose whether to use a flat FAISS index or an IVF index
+
 import os
 import time
 import numpy as np
@@ -26,7 +28,7 @@ OLLAMA_API_URL = "http://localhost:11434/api/generate"
 CHUNK_SIZE_CHARS = 1000
 CHUNK_OVERLAP_CHARS = 100
 
-# --- Helper functions (preprocess_text, recursive_character_splitter) are unchanged ---
+# --- Helper functions ---
 
 def preprocess_text(text: str) -> str:
     cleaned_text = re.sub(r' @(.)@ ', r'\1', text)
@@ -57,7 +59,6 @@ def recursive_character_splitter(text: str, chunk_size: int, chunk_overlap: int)
     return [c.strip() for c in final_chunks if c.strip()]
 
 
-# --- MODIFIED: create_and_save_index ---
 def create_and_save_index(text_file, index_path, chunks_path, model, index_type='flat'):
     """
     Creates and saves a FAISS index based on the specified type ('flat' or 'ivf').
@@ -115,7 +116,7 @@ def create_and_save_index(text_file, index_path, chunks_path, model, index_type=
     print(f"Index and chunks saved successfully. Total creation time: {end_time - start_time:.2f} seconds.")
     
     return index, chunks
-
+    
 
 def load_existing_index(index_path, chunks_path):
     # This function works for any index type

@@ -23,7 +23,7 @@ OLLAMA_MODEL_NAME = "gemma3:1b"
 OLLAMA_API_URL = "http://localhost:11434/api/generate"
 
 
-# --- NEW: Pre-processing Function ---
+# --- Pre-processing Function ---
 def preprocess_text(text: str) -> str:
     """
     Cleans the text by replacing custom-delimited punctuation
@@ -39,7 +39,7 @@ def preprocess_text(text: str) -> str:
     return cleaned_text
 
 
-# --- Helper Functions (Recursive splitter is unchanged) ---
+# --- Helper Functions ---
 def recursive_character_splitter(text: str, chunk_size: int, chunk_overlap: int):
     """
     A more robust recursive text splitter. It first splits the text into large

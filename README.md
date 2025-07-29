@@ -1,0 +1,14 @@
+# Running a RAG on a Raspberry Pi 5
+A friend and I have been working on understanding the limitations of running largish models on smallish hardware. I didn't know a whole lot about the inner workings of RAGs and figured that getting one running on a Raspberry Pi would provide an excellent introduction.
+
+My goal was to build an offline version of Wikipedia that I could talk to using my choice of LLM served locally via [Ollama](https://ollama.com) and the [modular voice agent](https://github.com/akauffm/edge_voice_agent) Kat and I built previously.
+
+I initially tried using a framework that included RAG capabilities ([OpenWebUI](https://github.com/open-webui/open-webui)) but when it didn't work as expected, debugging it proved much harder than implementing the RAG from scratch, which forced me to learn about vector indexes and a bunch of other things.
+
+## TL;DR
+I spent a week and a half building and rebuilding and learned:
+1. There are lots of variables to play with when it comes to RAG—vector index architecture, chunk size and overlap in the vector index, the sentence embedding model, the chunking method for the input text (these affected the model's ability to return relevant information, but not its overall performance), number of results returned (this made the biggest difference on performance), LLM used (unsurprisingly, larger models hallucinated less).
+2. [FAISS](https://github.com/facebookresearch/faiss) is the way to go for searching a vector database on the Pi. There is technically a faster in-memory implementation of the same algorithm, but the search takes around 100ms, so not worth further optimization.
+3. As noted above, the single biggest factor is the length of the query passed to the LLM. The response time scales linearly with context length, so passing in more than a single search result extended the response time to between 10 and 40 seconds, depending on the model.
+4. **Most interesting:** Some response caching happens behind the scenes, so if you ask the same thing quickly twice in a row, the second response is much faster than the first. But we found no straightforward way to configure or interact in any meaningful way with that cache. Seems like an area for further investigation.
+
